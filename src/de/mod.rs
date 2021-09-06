@@ -21,6 +21,8 @@ pub enum DecodeOption {
     SkipHeaderCrcValidation,
     /// Ignore data section checksum value
     SkipDataCrcValidation,
+    /// Handle special case of header crc == 0x0000
+    HandleZeroCrcHeader,
 }
 
 /// Stores a FIT file object (header, message or CRC)
@@ -105,18 +107,22 @@ impl Deserializer {
         self.crc = 0;
 
         if let Some(value) = header.crc() {
-            let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
-            if !self
-                .options
-                .contains(&DecodeOption::SkipHeaderCrcValidation)
-                && checksum != value
-            {
-                return Err(Box::new(ErrorKind::InvalidCrc((
-                    Vec::from(remaining),
-                    FitObject::Header(header),
-                    value,
-                    checksum,
-                ))));
+            if self.options.contains(&DecodeOption::HandleZeroCrcHeader) && value == 0 {
+                self.crc = update_crc(0, &input[0..(header.header_size() as usize)]);
+            } else {
+                let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
+                if !self
+                    .options
+                    .contains(&DecodeOption::SkipHeaderCrcValidation)
+                    && checksum != value
+                {
+                    return Err(Box::new(ErrorKind::InvalidCrc((
+                        Vec::from(remaining),
+                        FitObject::Header(header),
+                        value,
+                        checksum,
+                    ))));
+                }
             }
         } else {
             // if the header doesn't have its own CRC then the header bytes are included in
