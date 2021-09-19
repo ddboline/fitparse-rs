@@ -12,6 +12,7 @@
 //! that parses FIT files and exports them as JSON.
 //! ```
 //! use fitparser;
+//! use fitparser::de::{DecodeOption, from_reader_with_options};
 //! use std::fs::File;
 //! use std::io::prelude::*;
 //!
@@ -21,6 +22,16 @@
 //!     // print the data in FIT file
 //!     println!("{:#?}", data);
 //! }
+//!
+//! // Optionally ignore CRC validation
+//! let opts = [DecodeOption::SkipHeaderCrcValidation,
+//!             DecodeOption::SkipDataCrcValidation].iter().map(|o| *o).collect();
+//! let mut fp = File::open("tests/fixtures/Activity.fit")?;
+//! for data in from_reader_with_options(&mut fp, &opts)? {
+//!     // print the data in FIT file
+//!     println!("{:#?}", data);
+//! }
+//!
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
 #![warn(missing_docs)]
@@ -271,7 +282,7 @@ impl convert::TryInto<i64> for Value {
     }
 }
 
-/// Describes a field value along with it's defined units (if any), this struct is useful for
+/// Describes a field value along with its defined units (if any), this struct is useful for
 /// serializing data in a key-value store where the key is either the name or definition number
 /// since it can be created from a `FitDataField` with minimal data cloning.
 #[derive(Clone, Debug, Serialize)]
@@ -306,6 +317,7 @@ impl fmt::Display for ValueWithUnits {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashSet;
 
     #[test]
     fn parse_activity() {
@@ -392,5 +404,79 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/sample_mulitple_header.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3023);
+    }
+
+    #[test]
+    fn parse_with_header_crc_set_to_zero() {
+        // Set header CRC to zero so that the CRC at the EOF includes all bytes
+        let mut data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
+        let leng = data.len();
+        data[12] = 0x00;
+        data[13] = 0x00;
+        match de::from_bytes(&data) {
+            Ok(_) => assert!(
+                false,
+                "This test should fail without the data CRC value being recomputed to include the header."
+            ),
+            Err(e) => match *e {
+                ErrorKind::InvalidCrc(..) => {}
+                _ => assert!(false, "Incorrect error returned {:?}", e),
+            },
+        }
+
+        // update data CRC value so that it includes the header
+        data[leng - 2] = 0x58;
+        data[leng - 1] = 0x65;
+        let fit_data = de::from_bytes(&data).unwrap();
+        assert_eq!(fit_data.len(), 143);
+    }
+
+    #[test]
+    fn parse_with_invalid_header_crc_with_options() {
+        // force header CRC to be an invalid, non-zero value
+        let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
+        data[12] = 0xFF;
+        data[13] = 0xFF;
+        let mut options = HashSet::new();
+        match de::from_bytes_with_options(&data, &options) {
+            Ok(_) => assert!(
+                false,
+                "This test should fail without the SkipHeaderCrcValidation option."
+            ),
+            Err(e) => match *e {
+                ErrorKind::InvalidCrc(..) => {}
+                _ => assert!(false, "Incorrect error returned {:?}", e),
+            },
+        }
+
+        // add proper option to decode file
+        options.insert(de::DecodeOption::SkipHeaderCrcValidation);
+        let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
+        assert_eq!(fit_data.len(), 355);
+    }
+
+    #[test]
+    fn parse_with_invalid_data_crc_with_options() {
+        // force data CRC to be an invalid value
+        let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
+        let leng = data.len();
+        data[leng - 2] = 0xFF;
+        data[leng - 1] = 0xFF;
+        let mut options = HashSet::new();
+        match de::from_bytes_with_options(&data, &options) {
+            Ok(_) => assert!(
+                false,
+                "This test should fail without the SkipDataCrcValidation option."
+            ),
+            Err(e) => match *e {
+                ErrorKind::InvalidCrc(..) => {}
+                _ => assert!(false, "Incorrect error returned {:?}", e),
+            },
+        }
+
+        // add proper option to decode file
+        options.insert(de::DecodeOption::SkipDataCrcValidation);
+        let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
+        assert_eq!(fit_data.len(), 355);
     }
 }

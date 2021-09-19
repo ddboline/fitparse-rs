@@ -1,4 +1,4 @@
-//! Auto generated profile field types from FIT SDK Release: 21.47.00
+//! Auto generated profile field types from FIT SDK Release: 21.60.00
 //! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]
@@ -707,6 +707,7 @@ impl Serialize for MesgCount {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// seconds since UTC 00:00 Dec 31 1989
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
@@ -753,6 +754,7 @@ impl Serialize for DateTime {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// seconds since 00:00 Dec 31 1989 in local time zone
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LocalDateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
@@ -1147,6 +1149,7 @@ impl Serialize for Language {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to language enum type (1 << language).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits0 {
     English,
@@ -2675,6 +2678,7 @@ impl Serialize for Sport {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << sport).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits0 {
     Generic,
@@ -2749,6 +2753,7 @@ impl Serialize for SportBits0 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-8)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits1 {
     Tennis,
@@ -2822,6 +2827,7 @@ impl Serialize for SportBits1 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-16)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits2 {
     Mountaineering,
@@ -2895,6 +2901,7 @@ impl Serialize for SportBits2 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-24)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits3 {
     Driving,
@@ -2968,6 +2975,7 @@ impl Serialize for SportBits3 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-32)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits4 {
     Sailing,
@@ -3041,6 +3049,7 @@ impl Serialize for SportBits4 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-40)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits5 {
     WaterSkiing,
@@ -3114,6 +3123,7 @@ impl Serialize for SportBits5 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-48)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits6 {
     FloorClimbing,
@@ -3275,6 +3285,8 @@ pub enum SubSport {
     VirtualActivity,
     /// Used for events where participants run, crawl through mud, climb over walls, etc.
     Obstacle,
+    /// Sailing
+    SailRace,
     All,
     UnknownVariant(u8),
 }
@@ -3341,6 +3353,7 @@ impl SubSport {
             SubSport::ApneaHunting => 57,
             SubSport::VirtualActivity => 58,
             SubSport::Obstacle => 59,
+            SubSport::SailRace => 65,
             SubSport::All => 254,
             SubSport::UnknownVariant(value) => value,
         }
@@ -3412,6 +3425,7 @@ impl fmt::Display for SubSport {
             SubSport::ApneaHunting => write!(f, "apnea_hunting"),
             SubSport::VirtualActivity => write!(f, "virtual_activity"),
             SubSport::Obstacle => write!(f, "obstacle"),
+            SubSport::SailRace => write!(f, "sail_race"),
             SubSport::All => write!(f, "all"),
             SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -3480,6 +3494,7 @@ impl convert::From<u8> for SubSport {
             57 => SubSport::ApneaHunting,
             58 => SubSport::VirtualActivity,
             59 => SubSport::Obstacle,
+            65 => SubSport::SailRace,
             254 => SubSport::All,
             _ => SubSport::UnknownVariant(value),
         }
@@ -4086,6 +4101,7 @@ impl Serialize for DateMode {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Timeout in seconds.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BacklightTimeout {
     /// Backlight stays on forever.
@@ -4439,6 +4455,7 @@ impl Serialize for EventType {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// timer event data
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimerTrigger {
     Manual,
@@ -4492,6 +4509,7 @@ impl Serialize for TimerTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// fitness equipment event data
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FitnessEquipmentState {
     Ready,
@@ -5517,6 +5535,7 @@ pub enum Manufacturer {
     Osynce,
     Holux,
     Concept2,
+    Shimano,
     OneGiantLeap,
     AceSensor,
     BrimBrothers,
@@ -5612,6 +5631,7 @@ pub enum Manufacturer {
     Cycplus,
     GravaaByte,
     Sigeyi,
+    Coospo,
     Development,
     Healthandlife,
     Lezyne,
@@ -5671,6 +5691,7 @@ pub enum Manufacturer {
     MonarkExercise,
     Form,
     Decathlon,
+    Syncros,
     Actigraphcorp,
     UnknownVariant(u16),
 }
@@ -5717,6 +5738,7 @@ impl Manufacturer {
             Manufacturer::Osynce => 38,
             Manufacturer::Holux => 39,
             Manufacturer::Concept2 => 40,
+            Manufacturer::Shimano => 41,
             Manufacturer::OneGiantLeap => 42,
             Manufacturer::AceSensor => 43,
             Manufacturer::BrimBrothers => 44,
@@ -5808,6 +5830,7 @@ impl Manufacturer {
             Manufacturer::Cycplus => 132,
             Manufacturer::GravaaByte => 133,
             Manufacturer::Sigeyi => 134,
+            Manufacturer::Coospo => 135,
             Manufacturer::Development => 255,
             Manufacturer::Healthandlife => 257,
             Manufacturer::Lezyne => 258,
@@ -5863,6 +5886,7 @@ impl Manufacturer {
             Manufacturer::MonarkExercise => 308,
             Manufacturer::Form => 309,
             Manufacturer::Decathlon => 310,
+            Manufacturer::Syncros => 311,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::UnknownVariant(value) => value,
         }
@@ -5914,6 +5938,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Osynce => write!(f, "osynce"),
             Manufacturer::Holux => write!(f, "holux"),
             Manufacturer::Concept2 => write!(f, "concept2"),
+            Manufacturer::Shimano => write!(f, "shimano"),
             Manufacturer::OneGiantLeap => write!(f, "one_giant_leap"),
             Manufacturer::AceSensor => write!(f, "ace_sensor"),
             Manufacturer::BrimBrothers => write!(f, "brim_brothers"),
@@ -6005,6 +6030,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Cycplus => write!(f, "cycplus"),
             Manufacturer::GravaaByte => write!(f, "gravaa_byte"),
             Manufacturer::Sigeyi => write!(f, "sigeyi"),
+            Manufacturer::Coospo => write!(f, "coospo"),
             Manufacturer::Development => write!(f, "development"),
             Manufacturer::Healthandlife => write!(f, "healthandlife"),
             Manufacturer::Lezyne => write!(f, "lezyne"),
@@ -6060,6 +6086,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::MonarkExercise => write!(f, "monark_exercise"),
             Manufacturer::Form => write!(f, "form"),
             Manufacturer::Decathlon => write!(f, "decathlon"),
+            Manufacturer::Syncros => write!(f, "syncros"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -6108,6 +6135,7 @@ impl convert::From<u16> for Manufacturer {
             38 => Manufacturer::Osynce,
             39 => Manufacturer::Holux,
             40 => Manufacturer::Concept2,
+            41 => Manufacturer::Shimano,
             42 => Manufacturer::OneGiantLeap,
             43 => Manufacturer::AceSensor,
             44 => Manufacturer::BrimBrothers,
@@ -6199,6 +6227,7 @@ impl convert::From<u16> for Manufacturer {
             132 => Manufacturer::Cycplus,
             133 => Manufacturer::GravaaByte,
             134 => Manufacturer::Sigeyi,
+            135 => Manufacturer::Coospo,
             255 => Manufacturer::Development,
             257 => Manufacturer::Healthandlife,
             258 => Manufacturer::Lezyne,
@@ -6254,6 +6283,7 @@ impl convert::From<u16> for Manufacturer {
             308 => Manufacturer::MonarkExercise,
             309 => Manufacturer::Form,
             310 => Manufacturer::Decathlon,
+            311 => Manufacturer::Syncros,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::UnknownVariant(value),
         }
@@ -6274,7 +6304,7 @@ impl Serialize for Manufacturer {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GarminProduct {
-    Hrm1,
+    ApproachG12Asia,
     /// AXH01 HRM chipset
     Axh01,
     Axb01,
@@ -6358,6 +6388,7 @@ pub enum GarminProduct {
     /// Also Edge Touring Plus
     EdgeTouring,
     Edge510Japan,
+    /// Also HRM-Swim
     HrmTri,
     HrmRun,
     Fr920xt,
@@ -6438,12 +6469,14 @@ pub enum GarminProduct {
     Hrm4Run,
     EpixJapan,
     VivoActiveHr,
+    ApproachG12,
     VivoSmartGpsHr,
     VivoSmartHr,
     VivoSmartHrAsia,
     VivoSmartGpsHrAsia,
     VivoMove,
     VariaTaillight,
+    Fr235Asia,
     Fr235Japan,
     VariaVision,
     VivoFit3,
@@ -6496,6 +6529,7 @@ pub enum GarminProduct {
     Fr235ChinaNfc,
     Foretrex601701,
     VivoMoveHr,
+    Vector3,
     Fenix5Asia,
     Fenix5sAsia,
     Fenix5xAsia,
@@ -6506,6 +6540,7 @@ pub enum GarminProduct {
     VivoSportApac,
     Fr935Asia,
     Descent,
+    VivoFit4,
     Fr645,
     Fr645m,
     Fr30,
@@ -6554,6 +6589,7 @@ pub enum GarminProduct {
     MarqExpedition,
     MarqAthlete,
     DescentMk2,
+    Gpsmap66i,
     Fenix6SSport,
     Fenix6S,
     Fenix6Sport,
@@ -6561,6 +6597,8 @@ pub enum GarminProduct {
     Fenix6x,
     /// HRM-Dual
     HrmDual,
+    /// HRM-Pro
+    HrmPro,
     VivoMove3Premium,
     ApproachS40,
     Fr245mAsia,
@@ -6582,29 +6620,52 @@ pub enum GarminProduct {
     MarqAthleteAsia,
     Fr45Asia,
     Vivoactive3Daimler,
+    LegacyRey,
+    LegacyDarthVader,
+    LegacyCaptainMarvel,
+    LegacyFirstAvenger,
     Fenix6sSportAsia,
     Fenix6sAsia,
     Fenix6SportAsia,
     Fenix6Asia,
     Fenix6xAsia,
+    LegacyCaptainMarvelAsia,
+    LegacyFirstAvengerAsia,
+    LegacyReyAsia,
+    LegacyDarthVaderAsia,
+    DescentMk2s,
     Edge130Plus,
     Edge1030Plus,
+    /// Rally 100/200 Power Meter Series
+    Rally200,
     Fr745,
     Venusq,
+    Lily,
     MarqAdventurer,
+    Enduro,
     Swim2Apac,
     MarqAdventurerAsia,
     /// Mk2 and Mk2i
     DescentMk2Asia,
+    Venu2,
+    Venu2s,
     VenuDaimlerAsia,
     MarqGolfer,
     VenuDaimler,
     Fr745Asia,
+    LilyAsia,
     Edge1030PlusAsia,
     Edge130PlusAsia,
+    ApproachS12,
     VenusqAsia,
     MarqGolferAsia,
-    Venu2plus,
+    EnduroAsia,
+    DescentMk2sAsia,
+    ApproachS42,
+    Venu2sAsia,
+    Venu2Asia,
+    ApproachS12Asia,
+    ApproachS42Asia,
     /// SDM4 footpod
     Sdm4,
     EdgeRemote,
@@ -6623,7 +6684,7 @@ pub enum GarminProduct {
 impl GarminProduct {
     pub fn as_u16(self) -> u16 {
         match self {
-            GarminProduct::Hrm1 => 1,
+            GarminProduct::ApproachG12Asia => 1,
             GarminProduct::Axh01 => 2,
             GarminProduct::Axb01 => 3,
             GarminProduct::Axb02 => 4,
@@ -6771,12 +6832,14 @@ impl GarminProduct {
             GarminProduct::Hrm4Run => 2327,
             GarminProduct::EpixJapan => 2332,
             GarminProduct::VivoActiveHr => 2337,
+            GarminProduct::ApproachG12 => 2343,
             GarminProduct::VivoSmartGpsHr => 2347,
             GarminProduct::VivoSmartHr => 2348,
             GarminProduct::VivoSmartHrAsia => 2361,
             GarminProduct::VivoSmartGpsHrAsia => 2362,
             GarminProduct::VivoMove => 2368,
             GarminProduct::VariaTaillight => 2379,
+            GarminProduct::Fr235Asia => 2396,
             GarminProduct::Fr235Japan => 2397,
             GarminProduct::VariaVision => 2398,
             GarminProduct::VivoFit3 => 2406,
@@ -6828,6 +6891,7 @@ impl GarminProduct {
             GarminProduct::Fr235ChinaNfc => 2733,
             GarminProduct::Foretrex601701 => 2769,
             GarminProduct::VivoMoveHr => 2772,
+            GarminProduct::Vector3 => 2787,
             GarminProduct::Fenix5Asia => 2796,
             GarminProduct::Fenix5sAsia => 2797,
             GarminProduct::Fenix5xAsia => 2798,
@@ -6838,6 +6902,7 @@ impl GarminProduct {
             GarminProduct::VivoSportApac => 2832,
             GarminProduct::Fr935Asia => 2833,
             GarminProduct::Descent => 2859,
+            GarminProduct::VivoFit4 => 2878,
             GarminProduct::Fr645 => 2886,
             GarminProduct::Fr645m => 2888,
             GarminProduct::Fr30 => 2891,
@@ -6884,12 +6949,14 @@ impl GarminProduct {
             GarminProduct::MarqExpedition => 3250,
             GarminProduct::MarqAthlete => 3251,
             GarminProduct::DescentMk2 => 3258,
+            GarminProduct::Gpsmap66i => 3284,
             GarminProduct::Fenix6SSport => 3287,
             GarminProduct::Fenix6S => 3288,
             GarminProduct::Fenix6Sport => 3289,
             GarminProduct::Fenix6 => 3290,
             GarminProduct::Fenix6x => 3291,
             GarminProduct::HrmDual => 3299,
+            GarminProduct::HrmPro => 3300,
             GarminProduct::VivoMove3Premium => 3308,
             GarminProduct::ApproachS40 => 3314,
             GarminProduct::Fr245mAsia => 3321,
@@ -6911,28 +6978,50 @@ impl GarminProduct {
             GarminProduct::MarqAthleteAsia => 3451,
             GarminProduct::Fr45Asia => 3469,
             GarminProduct::Vivoactive3Daimler => 3473,
+            GarminProduct::LegacyRey => 3498,
+            GarminProduct::LegacyDarthVader => 3499,
+            GarminProduct::LegacyCaptainMarvel => 3500,
+            GarminProduct::LegacyFirstAvenger => 3501,
             GarminProduct::Fenix6sSportAsia => 3512,
             GarminProduct::Fenix6sAsia => 3513,
             GarminProduct::Fenix6SportAsia => 3514,
             GarminProduct::Fenix6Asia => 3515,
             GarminProduct::Fenix6xAsia => 3516,
+            GarminProduct::LegacyCaptainMarvelAsia => 3535,
+            GarminProduct::LegacyFirstAvengerAsia => 3536,
+            GarminProduct::LegacyReyAsia => 3537,
+            GarminProduct::LegacyDarthVaderAsia => 3538,
+            GarminProduct::DescentMk2s => 3542,
             GarminProduct::Edge130Plus => 3558,
             GarminProduct::Edge1030Plus => 3570,
+            GarminProduct::Rally200 => 3578,
             GarminProduct::Fr745 => 3589,
             GarminProduct::Venusq => 3600,
+            GarminProduct::Lily => 3615,
             GarminProduct::MarqAdventurer => 3624,
+            GarminProduct::Enduro => 3638,
             GarminProduct::Swim2Apac => 3639,
             GarminProduct::MarqAdventurerAsia => 3648,
             GarminProduct::DescentMk2Asia => 3702,
+            GarminProduct::Venu2 => 3703,
+            GarminProduct::Venu2s => 3704,
             GarminProduct::VenuDaimlerAsia => 3737,
             GarminProduct::MarqGolfer => 3739,
             GarminProduct::VenuDaimler => 3740,
             GarminProduct::Fr745Asia => 3794,
+            GarminProduct::LilyAsia => 3809,
             GarminProduct::Edge1030PlusAsia => 3812,
             GarminProduct::Edge130PlusAsia => 3813,
+            GarminProduct::ApproachS12 => 3823,
             GarminProduct::VenusqAsia => 3837,
             GarminProduct::MarqGolferAsia => 3850,
-            GarminProduct::Venu2plus => 3851,
+            GarminProduct::EnduroAsia => 3872,
+            GarminProduct::DescentMk2sAsia => 3930,
+            GarminProduct::ApproachS42 => 3934,
+            GarminProduct::Venu2sAsia => 3949,
+            GarminProduct::Venu2Asia => 3950,
+            GarminProduct::ApproachS12Asia => 3986,
+            GarminProduct::ApproachS42Asia => 4002,
             GarminProduct::Sdm4 => 10007,
             GarminProduct::EdgeRemote => 10014,
             GarminProduct::TrainingCenter => 20119,
@@ -6954,7 +7043,7 @@ impl GarminProduct {
 impl fmt::Display for GarminProduct {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            GarminProduct::Hrm1 => write!(f, "hrm1"),
+            GarminProduct::ApproachG12Asia => write!(f, "approach_g12_asia"),
             GarminProduct::Axh01 => write!(f, "axh01"),
             GarminProduct::Axb01 => write!(f, "axb01"),
             GarminProduct::Axb02 => write!(f, "axb02"),
@@ -7108,12 +7197,14 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Hrm4Run => write!(f, "hrm4_run"),
             GarminProduct::EpixJapan => write!(f, "epix_japan"),
             GarminProduct::VivoActiveHr => write!(f, "vivo_active_hr"),
+            GarminProduct::ApproachG12 => write!(f, "approach_g12"),
             GarminProduct::VivoSmartGpsHr => write!(f, "vivo_smart_gps_hr"),
             GarminProduct::VivoSmartHr => write!(f, "vivo_smart_hr"),
             GarminProduct::VivoSmartHrAsia => write!(f, "vivo_smart_hr_asia"),
             GarminProduct::VivoSmartGpsHrAsia => write!(f, "vivo_smart_gps_hr_asia"),
             GarminProduct::VivoMove => write!(f, "vivo_move"),
             GarminProduct::VariaTaillight => write!(f, "varia_taillight"),
+            GarminProduct::Fr235Asia => write!(f, "fr235_asia"),
             GarminProduct::Fr235Japan => write!(f, "fr235_japan"),
             GarminProduct::VariaVision => write!(f, "varia_vision"),
             GarminProduct::VivoFit3 => write!(f, "vivo_fit3"),
@@ -7165,6 +7256,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fr235ChinaNfc => write!(f, "fr235_china_nfc"),
             GarminProduct::Foretrex601701 => write!(f, "foretrex_601_701"),
             GarminProduct::VivoMoveHr => write!(f, "vivo_move_hr"),
+            GarminProduct::Vector3 => write!(f, "vector_3"),
             GarminProduct::Fenix5Asia => write!(f, "fenix5_asia"),
             GarminProduct::Fenix5sAsia => write!(f, "fenix5s_asia"),
             GarminProduct::Fenix5xAsia => write!(f, "fenix5x_asia"),
@@ -7175,6 +7267,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::VivoSportApac => write!(f, "vivo_sport_apac"),
             GarminProduct::Fr935Asia => write!(f, "fr935_asia"),
             GarminProduct::Descent => write!(f, "descent"),
+            GarminProduct::VivoFit4 => write!(f, "vivo_fit4"),
             GarminProduct::Fr645 => write!(f, "fr645"),
             GarminProduct::Fr645m => write!(f, "fr645m"),
             GarminProduct::Fr30 => write!(f, "fr30"),
@@ -7221,12 +7314,14 @@ impl fmt::Display for GarminProduct {
             GarminProduct::MarqExpedition => write!(f, "marq_expedition"),
             GarminProduct::MarqAthlete => write!(f, "marq_athlete"),
             GarminProduct::DescentMk2 => write!(f, "descent_mk2"),
+            GarminProduct::Gpsmap66i => write!(f, "gpsmap66i"),
             GarminProduct::Fenix6SSport => write!(f, "fenix6S_sport"),
             GarminProduct::Fenix6S => write!(f, "fenix6S"),
             GarminProduct::Fenix6Sport => write!(f, "fenix6_sport"),
             GarminProduct::Fenix6 => write!(f, "fenix6"),
             GarminProduct::Fenix6x => write!(f, "fenix6x"),
             GarminProduct::HrmDual => write!(f, "hrm_dual"),
+            GarminProduct::HrmPro => write!(f, "hrm_pro"),
             GarminProduct::VivoMove3Premium => write!(f, "vivo_move3_premium"),
             GarminProduct::ApproachS40 => write!(f, "approach_s40"),
             GarminProduct::Fr245mAsia => write!(f, "fr245m_asia"),
@@ -7248,28 +7343,50 @@ impl fmt::Display for GarminProduct {
             GarminProduct::MarqAthleteAsia => write!(f, "marq_athlete_asia"),
             GarminProduct::Fr45Asia => write!(f, "fr45_asia"),
             GarminProduct::Vivoactive3Daimler => write!(f, "vivoactive3_daimler"),
+            GarminProduct::LegacyRey => write!(f, "legacy_rey"),
+            GarminProduct::LegacyDarthVader => write!(f, "legacy_darth_vader"),
+            GarminProduct::LegacyCaptainMarvel => write!(f, "legacy_captain_marvel"),
+            GarminProduct::LegacyFirstAvenger => write!(f, "legacy_first_avenger"),
             GarminProduct::Fenix6sSportAsia => write!(f, "fenix6s_sport_asia"),
             GarminProduct::Fenix6sAsia => write!(f, "fenix6s_asia"),
             GarminProduct::Fenix6SportAsia => write!(f, "fenix6_sport_asia"),
             GarminProduct::Fenix6Asia => write!(f, "fenix6_asia"),
             GarminProduct::Fenix6xAsia => write!(f, "fenix6x_asia"),
+            GarminProduct::LegacyCaptainMarvelAsia => write!(f, "legacy_captain_marvel_asia"),
+            GarminProduct::LegacyFirstAvengerAsia => write!(f, "legacy_first_avenger_asia"),
+            GarminProduct::LegacyReyAsia => write!(f, "legacy_rey_asia"),
+            GarminProduct::LegacyDarthVaderAsia => write!(f, "legacy_darth_vader_asia"),
+            GarminProduct::DescentMk2s => write!(f, "descent_mk2s"),
             GarminProduct::Edge130Plus => write!(f, "edge_130_plus"),
             GarminProduct::Edge1030Plus => write!(f, "edge_1030_plus"),
+            GarminProduct::Rally200 => write!(f, "rally_200"),
             GarminProduct::Fr745 => write!(f, "fr745"),
             GarminProduct::Venusq => write!(f, "venusq"),
+            GarminProduct::Lily => write!(f, "lily"),
             GarminProduct::MarqAdventurer => write!(f, "marq_adventurer"),
+            GarminProduct::Enduro => write!(f, "enduro"),
             GarminProduct::Swim2Apac => write!(f, "swim2_apac"),
             GarminProduct::MarqAdventurerAsia => write!(f, "marq_adventurer_asia"),
             GarminProduct::DescentMk2Asia => write!(f, "descent_mk2_asia"),
+            GarminProduct::Venu2 => write!(f, "venu2"),
+            GarminProduct::Venu2s => write!(f, "venu2s"),
             GarminProduct::VenuDaimlerAsia => write!(f, "venu_daimler_asia"),
             GarminProduct::MarqGolfer => write!(f, "marq_golfer"),
             GarminProduct::VenuDaimler => write!(f, "venu_daimler"),
             GarminProduct::Fr745Asia => write!(f, "fr745_asia"),
+            GarminProduct::LilyAsia => write!(f, "lily_asia"),
             GarminProduct::Edge1030PlusAsia => write!(f, "edge_1030_plus_asia"),
             GarminProduct::Edge130PlusAsia => write!(f, "edge_130_plus_asia"),
+            GarminProduct::ApproachS12 => write!(f, "approach_s12"),
             GarminProduct::VenusqAsia => write!(f, "venusq_asia"),
             GarminProduct::MarqGolferAsia => write!(f, "marq_golfer_asia"),
-            GarminProduct::Venu2plus => write!(f, "venu2plus"),
+            GarminProduct::EnduroAsia => write!(f, "enduro_asia"),
+            GarminProduct::DescentMk2sAsia => write!(f, "descent_mk2s_asia"),
+            GarminProduct::ApproachS42 => write!(f, "approach_s42"),
+            GarminProduct::Venu2sAsia => write!(f, "venu2s_asia"),
+            GarminProduct::Venu2Asia => write!(f, "venu2_asia"),
+            GarminProduct::ApproachS12Asia => write!(f, "approach_S12_asia"),
+            GarminProduct::ApproachS42Asia => write!(f, "approach_s42_asia"),
             GarminProduct::Sdm4 => write!(f, "sdm4"),
             GarminProduct::EdgeRemote => write!(f, "edge_remote"),
             GarminProduct::TrainingCenter => write!(f, "training_center"),
@@ -7288,7 +7405,7 @@ impl fmt::Display for GarminProduct {
 impl convert::From<u16> for GarminProduct {
     fn from(value: u16) -> Self {
         match value {
-            1 => GarminProduct::Hrm1,
+            1 => GarminProduct::ApproachG12Asia,
             2 => GarminProduct::Axh01,
             3 => GarminProduct::Axb01,
             4 => GarminProduct::Axb02,
@@ -7436,12 +7553,14 @@ impl convert::From<u16> for GarminProduct {
             2327 => GarminProduct::Hrm4Run,
             2332 => GarminProduct::EpixJapan,
             2337 => GarminProduct::VivoActiveHr,
+            2343 => GarminProduct::ApproachG12,
             2347 => GarminProduct::VivoSmartGpsHr,
             2348 => GarminProduct::VivoSmartHr,
             2361 => GarminProduct::VivoSmartHrAsia,
             2362 => GarminProduct::VivoSmartGpsHrAsia,
             2368 => GarminProduct::VivoMove,
             2379 => GarminProduct::VariaTaillight,
+            2396 => GarminProduct::Fr235Asia,
             2397 => GarminProduct::Fr235Japan,
             2398 => GarminProduct::VariaVision,
             2406 => GarminProduct::VivoFit3,
@@ -7493,6 +7612,7 @@ impl convert::From<u16> for GarminProduct {
             2733 => GarminProduct::Fr235ChinaNfc,
             2769 => GarminProduct::Foretrex601701,
             2772 => GarminProduct::VivoMoveHr,
+            2787 => GarminProduct::Vector3,
             2796 => GarminProduct::Fenix5Asia,
             2797 => GarminProduct::Fenix5sAsia,
             2798 => GarminProduct::Fenix5xAsia,
@@ -7503,6 +7623,7 @@ impl convert::From<u16> for GarminProduct {
             2832 => GarminProduct::VivoSportApac,
             2833 => GarminProduct::Fr935Asia,
             2859 => GarminProduct::Descent,
+            2878 => GarminProduct::VivoFit4,
             2886 => GarminProduct::Fr645,
             2888 => GarminProduct::Fr645m,
             2891 => GarminProduct::Fr30,
@@ -7549,12 +7670,14 @@ impl convert::From<u16> for GarminProduct {
             3250 => GarminProduct::MarqExpedition,
             3251 => GarminProduct::MarqAthlete,
             3258 => GarminProduct::DescentMk2,
+            3284 => GarminProduct::Gpsmap66i,
             3287 => GarminProduct::Fenix6SSport,
             3288 => GarminProduct::Fenix6S,
             3289 => GarminProduct::Fenix6Sport,
             3290 => GarminProduct::Fenix6,
             3291 => GarminProduct::Fenix6x,
             3299 => GarminProduct::HrmDual,
+            3300 => GarminProduct::HrmPro,
             3308 => GarminProduct::VivoMove3Premium,
             3314 => GarminProduct::ApproachS40,
             3321 => GarminProduct::Fr245mAsia,
@@ -7576,28 +7699,50 @@ impl convert::From<u16> for GarminProduct {
             3451 => GarminProduct::MarqAthleteAsia,
             3469 => GarminProduct::Fr45Asia,
             3473 => GarminProduct::Vivoactive3Daimler,
+            3498 => GarminProduct::LegacyRey,
+            3499 => GarminProduct::LegacyDarthVader,
+            3500 => GarminProduct::LegacyCaptainMarvel,
+            3501 => GarminProduct::LegacyFirstAvenger,
             3512 => GarminProduct::Fenix6sSportAsia,
             3513 => GarminProduct::Fenix6sAsia,
             3514 => GarminProduct::Fenix6SportAsia,
             3515 => GarminProduct::Fenix6Asia,
             3516 => GarminProduct::Fenix6xAsia,
+            3535 => GarminProduct::LegacyCaptainMarvelAsia,
+            3536 => GarminProduct::LegacyFirstAvengerAsia,
+            3537 => GarminProduct::LegacyReyAsia,
+            3538 => GarminProduct::LegacyDarthVaderAsia,
+            3542 => GarminProduct::DescentMk2s,
             3558 => GarminProduct::Edge130Plus,
             3570 => GarminProduct::Edge1030Plus,
+            3578 => GarminProduct::Rally200,
             3589 => GarminProduct::Fr745,
             3600 => GarminProduct::Venusq,
+            3615 => GarminProduct::Lily,
             3624 => GarminProduct::MarqAdventurer,
+            3638 => GarminProduct::Enduro,
             3639 => GarminProduct::Swim2Apac,
             3648 => GarminProduct::MarqAdventurerAsia,
             3702 => GarminProduct::DescentMk2Asia,
+            3703 => GarminProduct::Venu2,
+            3704 => GarminProduct::Venu2s,
             3737 => GarminProduct::VenuDaimlerAsia,
             3739 => GarminProduct::MarqGolfer,
             3740 => GarminProduct::VenuDaimler,
             3794 => GarminProduct::Fr745Asia,
+            3809 => GarminProduct::LilyAsia,
             3812 => GarminProduct::Edge1030PlusAsia,
             3813 => GarminProduct::Edge130PlusAsia,
+            3823 => GarminProduct::ApproachS12,
             3837 => GarminProduct::VenusqAsia,
             3850 => GarminProduct::MarqGolferAsia,
-            3851 => GarminProduct::Venu2plus,
+            3872 => GarminProduct::EnduroAsia,
+            3930 => GarminProduct::DescentMk2sAsia,
+            3934 => GarminProduct::ApproachS42,
+            3949 => GarminProduct::Venu2sAsia,
+            3950 => GarminProduct::Venu2Asia,
+            3986 => GarminProduct::ApproachS12Asia,
+            4002 => GarminProduct::ApproachS42Asia,
             10007 => GarminProduct::Sdm4,
             10014 => GarminProduct::EdgeRemote,
             20119 => GarminProduct::TrainingCenter,
@@ -8173,6 +8318,7 @@ impl Serialize for Weight {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// 0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutHr {
     BpmOffset,
@@ -8218,6 +8364,7 @@ impl Serialize for WorkoutHr {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// 0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutPower {
     WattsOffset,
@@ -21111,6 +21258,7 @@ pub enum FieldDataType {
     RadarThreatLevelType,
 }
 impl FieldDataType {
+    #[allow(clippy::match_like_matches_macro)]
     pub fn is_enum_type(self) -> bool {
         match self {
             FieldDataType::File => true,

@@ -1,4 +1,18 @@
-# Change Log
+# Changelog
+
+## HEAD
+* Upgrade nom parser to version 7.0
+* Bump packaged FIT SDK version to 21.60.00 (by xehpuk)
+* Clippy/Typo cleanup (by danielalvsaaker, xehpuk)
+* Add doc comments to field types and messages (by xehpuk)
+* Allow CRC validation to be skipped.
+* Properly handle FIT files where the header CRC is zero (credit ddboline)
+
+## v0.4.2
+* Bump packaged FIT SDK version to 21.54.01
+
+## v0.4.1
+* Bump packaged FIT SDK version to 21.53.00
 
 ## v0.4.0
 * Improve parser error handling so that the user gets the byte position
@@ -21,7 +35,7 @@ to batch processing (see examples/streaming.rs).
 ## v0.2.0
 * Improve the API to allow manipulating the data with less cloning
 * Expose the actual MesgNum enum value to the user in the `kind` field
-of each FitDataRecord instead of it's name.
+of each FitDataRecord instead of its name.
 * Upated FitDataRecord to store fields as a Vec, sorted by definition
 number. Each field contains the name, number, value and units (if defined).
 * Rewrote parser logic to more closely resemble how serde deserializers are

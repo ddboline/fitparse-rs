@@ -1,6 +1,6 @@
 [package]
 name = "fitparser"
-version = "0.4.0"
+version = "0.4.2"
 authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
 edition = "2018"
 description = "A utility to parse ANT .FIT files and allow their contents to be serialized with serde."
@@ -13,7 +13,7 @@ categories = ["encoding", "parser-implementations"]
 
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
-nom = "6"
+nom = "7"
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 
