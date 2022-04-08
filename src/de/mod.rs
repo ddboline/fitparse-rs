@@ -6,7 +6,6 @@ use nom::number::complete::le_u16;
 use std::collections::{HashMap, HashSet};
 use std::io::Read;
 use std::rc::Rc;
-use log::warn;
 
 mod crc;
 use crc::{caculate_crc, update_crc};

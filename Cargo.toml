@@ -12,13 +12,14 @@ keywords = ["ant", "fit", "garmin", "serde"]
 categories = ["encoding", "parser-implementations"]
 
 [dependencies]
-chrono = { version = "0.4", features = ["serde"] }
+time = {version="0.3", features=["serde-human-readable", "macros", "formatting", "parsing"]}
+time-tz = {version="0.5", features=["system"]}
 nom = "7"
 serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 
 [build-dependencies]
-calamine = "0.16.1"
+calamine = "0.18.0"
 
 [dev-dependencies]
 structopt = "0.3"

@@ -5,7 +5,8 @@ use crate::profile::{
     get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
 };
 use crate::{FitDataField, FitDataRecord, Value};
-use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
+use time::{OffsetDateTime, macros::datetime, Duration};
+use time_tz::{timezones::db::UTC, PrimitiveDateTimeExt};
 use std::collections::HashMap;
 use std::convert::{From, TryInto};
 use std::f64::EPSILON;
@@ -24,7 +25,7 @@ impl Value {
             Value::SInt32(val) => val.to_ne_bytes().to_vec(),
             Value::UInt32(val) => val.to_ne_bytes().to_vec(),
             Value::String(val) => val.as_bytes().to_vec(),
-            Value::Timestamp(val) => val.timestamp().to_ne_bytes().to_vec(),
+            Value::Timestamp(val) => val.unix_timestamp().to_ne_bytes().to_vec(),
             Value::Float32(val) => val.to_ne_bytes().to_vec(),
             Value::Float64(val) => val.to_ne_bytes().to_vec(),
             Value::UInt8z(val) => vec![*val as u8],
@@ -55,15 +56,16 @@ impl TimestampField {
     }
 
     /// converts offset value into a proper timestamp
-    fn to_date_time(self) -> DateTime<Local> {
+    fn to_date_time(self) -> OffsetDateTime {
         // reference date defined in FIT profile, it's either in UTC or local TZ
-        let ref_date = NaiveDate::from_ymd(1989, 12, 31).and_hms(0, 0, 0);
+        let ref_date = datetime!(1989-12-31 00:00:00);
         match self {
             Self::Local(value) => {
-                TimeZone::from_local_datetime(&Local, &ref_date).unwrap() + Duration::seconds(value)
+                let local = time_tz::system::get_timezone().unwrap_or(UTC);
+                ref_date.assume_timezone(local) + Duration::seconds(value)
             }
             Self::Utc(value) => {
-                TimeZone::from_utc_datetime(&Local, &ref_date) + Duration::seconds(value)
+                ref_date.assume_utc() + Duration::seconds(value)
             }
         }
     }
