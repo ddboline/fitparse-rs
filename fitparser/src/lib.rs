@@ -35,7 +35,7 @@
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
 #![warn(missing_docs)]
-use chrono::{DateTime, Local};
+use time::OffsetDateTime;
 use serde::Serialize;
 use std::convert;
 use std::fmt;
@@ -148,7 +148,7 @@ impl fmt::Display for FitDataField {
 #[serde(untagged)]
 pub enum Value {
     /// Timestamp field converted to the local timezone
-    Timestamp(DateTime<Local>),
+    Timestamp(OffsetDateTime),
     /// Unsigned 8bit integer data
     Byte(u8), // TODO: I think this should actually be a Vec<u8> type
     /// Unsigned 8bit integer that gets mapped to a FieldType enum
@@ -219,7 +219,7 @@ impl convert::TryInto<f64> for Value {
 
     fn try_into(self) -> Result<f64> {
         match self {
-            Value::Timestamp(val) => Ok(val.timestamp() as f64),
+            Value::Timestamp(val) => Ok(val.unix_timestamp() as f64),
             Value::Byte(val) => Ok(val as f64),
             Value::Enum(val) => Ok(val as f64),
             Value::SInt8(val) => Ok(val as f64),
@@ -251,7 +251,7 @@ impl convert::TryInto<i64> for Value {
 
     fn try_into(self) -> Result<i64> {
         match self {
-            Value::Timestamp(val) => Ok(val.timestamp()),
+            Value::Timestamp(val) => Ok(val.unix_timestamp()),
             Value::Byte(val) => Ok(val as i64),
             Value::Enum(val) => Ok(val as i64),
             Value::SInt8(val) => Ok(val as i64),
