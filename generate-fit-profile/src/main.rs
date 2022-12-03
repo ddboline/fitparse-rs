@@ -29,7 +29,7 @@ struct Cli {
 /// call rustfmt on a generated file to cleanup auto-gen code
 fn rustfmt(fname: &PathBuf) {
     Command::new("rustfmt")
-        .arg(&fname)
+        .arg(fname)
         .status()
         .unwrap_or_else(|_| panic!("failed to execute rustfmt on {:?}", fname));
 }

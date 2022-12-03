@@ -35,10 +35,10 @@
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
 #![warn(missing_docs)]
-use time::OffsetDateTime;
 use serde::Serialize;
 use std::convert;
 use std::fmt;
+use time::OffsetDateTime;
 
 pub mod de;
 mod error;

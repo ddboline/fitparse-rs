@@ -54,7 +54,7 @@ impl FieldTypeDefintion {
     }
 
     pub fn base_type(&self) -> &'static str {
-        &self.base_type
+        self.base_type
     }
 
     pub fn comment(&self) -> Option<&str> {
@@ -84,8 +84,8 @@ impl FieldTypeVariant {
         }
 
         FieldTypeVariant {
-            name: name.clone(),
-            titlized_name: titlized_name,
+            name,
+            titlized_name,
             value,
             comment,
         }
@@ -485,7 +485,7 @@ pub fn parse_profile(
     profile_fname: &PathBuf,
     version: String,
 ) -> Result<FitProfile, Box<dyn std::error::Error>> {
-    let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
+    let mut excel: Xlsx<_> = open_workbook(profile_fname)?;
 
     // process Types sheet
     let field_types = if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
