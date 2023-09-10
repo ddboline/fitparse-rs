@@ -13,7 +13,7 @@ categories = ["encoding", "parser-implementations"]
 
 [dependencies]
 time = {version="0.3", features=["serde-human-readable", "macros", "formatting", "parsing"]}
-time-tz = {version="1.0", features=["system"]}
+time-tz = {version="2.0", features=["system"]}
 nom = "7"
 serde = { version = "1.0", features = ["derive"] }
 
