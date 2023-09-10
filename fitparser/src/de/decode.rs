@@ -16,10 +16,10 @@ impl Value {
     /// Convert the value into a vector of bytes
     fn to_ne_bytes(&self) -> Vec<u8> {
         match self {
-            Value::Byte(val) => vec![*val as u8],
-            Value::Enum(val) => vec![*val as u8],
+            Value::Byte(val) => vec![*val],
+            Value::Enum(val) => vec![*val],
             Value::SInt8(val) => vec![*val as u8],
-            Value::UInt8(val) => vec![*val as u8],
+            Value::UInt8(val) => vec![*val],
             Value::SInt16(val) => val.to_ne_bytes().to_vec(),
             Value::UInt16(val) => val.to_ne_bytes().to_vec(),
             Value::SInt32(val) => val.to_ne_bytes().to_vec(),
@@ -28,7 +28,7 @@ impl Value {
             Value::Timestamp(val) => val.unix_timestamp().to_ne_bytes().to_vec(),
             Value::Float32(val) => val.to_ne_bytes().to_vec(),
             Value::Float64(val) => val.to_ne_bytes().to_vec(),
-            Value::UInt8z(val) => vec![*val as u8],
+            Value::UInt8z(val) => vec![*val],
             Value::UInt16z(val) => val.to_ne_bytes().to_vec(),
             Value::UInt32z(val) => val.to_ne_bytes().to_vec(),
             Value::SInt64(val) => val.to_ne_bytes().to_vec(),

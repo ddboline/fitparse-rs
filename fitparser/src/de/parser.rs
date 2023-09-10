@@ -199,9 +199,9 @@ pub struct FieldDefinition {
 /// within a data message to the appropriate meta-data.
 #[derive(Clone, Debug)]
 pub struct DeveloperFieldDefinition {
-    field_number: u8,
-    size: u8,
-    developer_data_index: u8,
+    pub field_number: u8,
+    pub size: u8,
+    pub developer_data_index: u8,
 }
 
 /// Stores a vector of raw fields described by the preceding Definition message, a Definition message
@@ -520,7 +520,7 @@ fn data_message_fields<'a>(
         Err(Err::Incomplete(_)) => {
             // output a correct "needed" value, subtract one because we've already parsed the header
             Err(Err::Incomplete(Needed::new(
-                def_mesg.data_message_size() as usize - input.len() - 1,
+                def_mesg.data_message_size() - input.len() - 1,
             )))
         }
         Err(r) => Err(r),
